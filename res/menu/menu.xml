@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/item1" android:title="Add/Remove/Export/Import"></item>
+    <item android:id="@+id/item2" android:title="Add Dead File"></item>
+    <item android:id="@+id/item3" android:title="Open Dead Files"></item>
+    <item android:id="@+id/item4" android:title="Active/Desactive UpperLetter" android:checkable="true"></item>
+    <item android:id="@+id/item7" android:title="Add cores ao background" android:checkable="true" android:checked="true"></item>
+    <item android:id="@+id/item8" android:title="Add/Change Tag"></item>
+    <item android:id="@+id/itemVisualizarItensTag" android:title="Visualizar Tag..."></item>
+    <item android:id="@+id/itemAtualizar" android:title="Atualizar Ideia"></item>
+    
+
+</menu>

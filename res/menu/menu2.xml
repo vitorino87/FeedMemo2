@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/item5" android:title="Remover do dead files"></item>
+    <item android:id="@+id/item6" android:title="Retornar"></item>
+    
+
+</menu>
