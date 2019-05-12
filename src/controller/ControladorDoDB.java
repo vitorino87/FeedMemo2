@@ -330,6 +330,13 @@ public class ControladorDoDB {
 		return a;
 	}
 	
+	public int addOrChangeTag(String tabela, int id, int tag){
+		ContentValues cv = new ContentValues();
+		cv.put("tag", tag);
+		int a = atualizarDB2(cv, tabela, id);
+		return a;
+	}
+	
 	public int addOrDelDeadFile(String tabela, String ideia, String dead){
 		ContentValues cv = new ContentValues();
 		cv.put("morto", dead);

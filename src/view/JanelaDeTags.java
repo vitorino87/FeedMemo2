@@ -170,7 +170,7 @@ public class JanelaDeTags {
 									int tag = Integer.parseInt(edt.getText().toString());
 									int a = mc.getCurrentId(); // captura o id
 																// atual
-									mc.addOrChangeTag(tabela, ideia, tag);
+									mc.addOrChangeTag(tabela, a, tag);
 									MainView.tagMax.setText("Tag Max: " + mc.getTagMax());
 									if (choose == 0) {
 										mc.setMinId(a - 2);
