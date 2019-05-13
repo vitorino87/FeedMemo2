@@ -366,6 +366,11 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	@Override
 	protected void onResume(){
 		super.onResume();
+	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
 		try{
 			mc.abrirConexao();		
 			GuardadorDeEstadosTemplate gd = new GuardadorDeEstadosTemplate();
@@ -395,14 +400,6 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			loadIdeias();
 			carregarFirst();
 		}		
-	}
-	
-	@Override
-	protected void onStart(){
-		super.onStart();
-		try{
-			//mc.abrirConexao();			
-		}catch(Exception ex){}
 	}
 	
 	@SuppressLint("DefaultLocale")
