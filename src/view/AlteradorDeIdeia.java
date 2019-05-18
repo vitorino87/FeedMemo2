@@ -96,8 +96,6 @@ public class AlteradorDeIdeia{
 		   if(mc.getMinId()<0)
 			   mc.setMinId(0);
 		   mc.setMaxId(idDB+2);
-		   mc.setMorto("n");
-		   mc.setTipoDeQuery(3);
 		   mc.retornarTodosResultados(tabela);
 		   MainView.carregarIdeia(idDB);
 	}
