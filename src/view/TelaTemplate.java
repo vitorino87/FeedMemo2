@@ -31,9 +31,16 @@ public class TelaTemplate extends Activity implements OnTouchListener, OnGesture
 			if (motionEvent2.getX() - motionEvent1.getX() > 50) {
 				controller.TelaAux.moverEsquerdaParaDireita();
 				return true;
-			} else {
+//			} else {
+//				return true;
+			}else if (motionEvent1.getY() - motionEvent2.getY() > 100){
+
+				return true;
+			}else if (motionEvent2.getY() - motionEvent1.getY() > 50){
+				
 				return true;
 			}
+			return false;
 		}
 	}
 	@Override

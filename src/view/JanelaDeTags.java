@@ -23,15 +23,24 @@ public class JanelaDeTags {
 	ControladorDoDB mc;
 	String tabela;
 	String ideia;
-	TextView tx = null;
+	TextView tx = null;	
 	Menu menu;
 	MenuDoMainView mmv;
 	static int tagCarregada = 0;
+	private static int chooseTela = 0;
 	Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btnApagar;
 	EditText edt;
 	static boolean checarMenu = false; // serve para evitar que seja adicionado
 										// vários menus ao menu principal
 
+	public static int getChooseTela() {
+		return chooseTela;
+	}
+
+	public static void setChooseTela(int chooseTela) {
+		JanelaDeTags.chooseTela = chooseTela;
+	}
+	
 	public int getTag() {
 		return tag;
 	}
@@ -56,8 +65,7 @@ public class JanelaDeTags {
 	 * @param choose
 	 * @return
 	 */
-	public Dialog onCreateDialog(final int choose) {
-
+	public Dialog onCreateDialog(final int choose) {		
 		if (ideia.contains(","))
 			ideia = ideia.replace(",", "\u0375");
 
@@ -167,7 +175,8 @@ public class JanelaDeTags {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
 								try {
-									int tag = Integer.parseInt(edt.getText().toString());
+									int tag = Integer.parseInt(edt.getText().toString());	
+									mc.setTagChangeTag(tag);
 									int a = mc.getCurrentId(); // captura o id
 																// atual
 									mc.addOrChangeTag(tabela, a, tag);
@@ -217,6 +226,7 @@ public class JanelaDeTags {
 												mc.retornarTodosResultados(tabela);
 												Toast.makeText(ac, "Retornou porque não há mais tag " + tagCarregada,
 														Toast.LENGTH_LONG).show();
+												setChooseTela(0);
 											}
 										}
 										MainView.carregarFirst();
@@ -233,7 +243,7 @@ public class JanelaDeTags {
 
 				break;
 
-			case 2:
+			case 2:				
 				tx.setText(msg[choose]);
 				alert.setView(layout).setTitle(msg[choose])
 						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -269,6 +279,7 @@ public class JanelaDeTags {
 									MainView.carregarIdeia(a); // utilizando a
 																// posição atual
 																// do cursor
+									setChooseTela(0);
 								}
 							}
 						}).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -280,7 +291,6 @@ public class JanelaDeTags {
 		} catch (Exception e) {
 
 		}
-
 		return alert.create();
 	}
 }

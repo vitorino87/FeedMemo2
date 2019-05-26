@@ -28,18 +28,18 @@ import controller.ControladorDoDB;
 import controller.GuardadorDeEstadosTemplate;
 
 public class MainView extends TelaTemplate implements OnTouchListener, OnGestureListener{	
-	static ControladorDoDB mc = null;		
+	protected static ControladorDoDB mc = null;		
 	static LinearLayout ll = null;		
 	public static Context context;
 	static EditText ideia = null;
-	final static String TABELA="ideias";
+	protected final static String TABELA="ideias";
 	ViewGroup gi = null;
-	Menu menu = null;
+	protected Menu menu = null;
 	Menu menu2 = null;	
 	static boolean allcaps = false;
 	static boolean isColored = true;
 	private static String bkp = "";
-	private JanelaDeTags jt;
+	protected JanelaDeTags jt;
 	static TextView tagView = null;
 	static TextView tagMax;	
 	int minId = 0;
@@ -294,13 +294,16 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			isColored=item.isChecked();		
 			break;			
 		case R.id.item8:			
-			jt.onCreateDialog(0).show();			
+			jt.onCreateDialog(0).show();	
+			JanelaDeTags.setChooseTela(0);
 			break;			
 		case R.id.itemVisualizarItensTag:
 			jt.onCreateDialog(2).show();
+			JanelaDeTags.setChooseTela(2);
 			break;			
 		case R.id.itemChangeTag:
 			jt.onCreateDialog(1).show();
+			JanelaDeTags.setChooseTela(1);
 			break;			
 		case R.id.itemTagRetornar:
 			retornar();
@@ -319,6 +322,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 		menu.clear();
 		MenuDoMainView mmv = new MenuDoMainView(MainView.this, menu);	   
 	    mmv.chamarMenuInicial(R.menu.menu);
+	    JanelaDeTags.setChooseTela(0);
 	    loadIdeias();
 		carregarFirst();
 	}
@@ -442,5 +446,95 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				
 		}
 	    return true;
+	}
+	@Override
+	public boolean onFling(MotionEvent motionEvent1, MotionEvent motionEvent2, float velocityX, float velocityY) {
+		if(motionEvent1 == null){
+			return false;
+		}else{
+			//movimento da direita para esquerda
+			if (motionEvent1.getX() - motionEvent2.getX() > 50) {
+				controller.TelaAux.moverDireitaParaEsquerda();
+				return true;
+			}
+			//movimento da esquerda para direita
+			if (motionEvent2.getX() - motionEvent1.getX() > 50) {
+				controller.TelaAux.moverEsquerdaParaDireita();
+				return true;
+//			} else {
+//				return true;
+			}else if (motionEvent1.getY() - motionEvent2.getY() > 100){
+
+				return true;
+			}else if (motionEvent2.getY() - motionEvent1.getY() > 50){
+				changeTag();
+				return true;
+			}
+			return false;
+		}
+	}
+	
+	public void changeTag(){
+		try {											
+			int a = mc.getCurrentId(); // captura o id
+										// atual			
+			mc.addOrChangeTag(TABELA, a, mc.getTagChangeTag());
+			MainView.tagMax.setText("Tag Max: " + mc.getTagMax());
+			if (JanelaDeTags.getChooseTela() == 0) {
+				mc.setMinId(a - 2);
+				if (mc.getMinId() < 0)
+					mc.setMinId(0);
+				mc.setMaxId(a + 2);
+				mc.setMorto("n");
+				mc.setTipoDeQuery(3);
+				mc.retornarTodosResultados(TABELA);
+				MainView.carregarIdeia(a);
+				MainView.tagView.setText("Tag: " + mc.getTagAtual());
+				Toast.makeText(MainView.this, "Adicionado na tag " + mc.getTagChangeTag(), Toast.LENGTH_SHORT).show();
+			} else {
+				// essa parte do código só ocorre na
+				// funcionalidade
+				// "Visualizar tag..."
+				// nas próximas 6 linhas o app tentará
+				// carregar as
+				// ideias do id atual até o id máximo.
+				Toast.makeText(MainView.this, "Alterado para tag " + mc.getTagChangeTag(), Toast.LENGTH_SHORT).show();
+				mc.setTipoDeQuery(2);
+				mc.setTag(JanelaDeTags.tagCarregada);
+				mc.setMinId(a);
+				mc.setMaxId(mc.getIdMaxDB());
+				mc.retornarTodosResultados(TABELA);
+				if (mc.getCursor().getCount() <= 0) {
+					// ...se não conseguir encontrar
+					// nada o app
+					// tentará carregas as ideias do id
+					// mínimo até o
+					// id atual
+					mc.setMinId(mc.getIdMinDB());
+					mc.setMaxId(a);
+					mc.retornarTodosResultados(TABELA);
+					if (mc.getCursor().getCount() <= 0) {
+						// ...se não conseguir nada ele
+						// retorna às
+						// ideias gerais
+						menu.clear();
+						JanelaDeTags.checarMenu = false;
+						MenuDoMainView mmv = new MenuDoMainView(MainView.this, menu);
+						mmv.chamarMenuInicial(R.menu.menu);
+						mc.setMorto("n");
+						mc.setTipoDeQuery(4);
+						mc.retornarTodosResultados(TABELA);
+						Toast.makeText(MainView.this, "Retornou porque não há mais tag " + JanelaDeTags.tagCarregada,
+								Toast.LENGTH_LONG).show();
+						JanelaDeTags.setChooseTela(0);
+					}
+				}
+				MainView.carregarFirst();
+			}
+		} catch (NumberFormatException e) {
+			Toast.makeText(MainView.this, "Não foi possível adicionar a tag", Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}
+
 	}
 }

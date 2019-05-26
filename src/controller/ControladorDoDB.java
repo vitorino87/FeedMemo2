@@ -16,10 +16,19 @@ public class ControladorDoDB {
 	String morto;
 	int minId, maxId;
 	int tag;
+	int tagChangeTag;
 	final String TABELA = "ideias";
 	
-	public int getTag() {
-		return tag;
+	public int getTagChangeTag() {
+		return tagChangeTag;
+	}
+
+	public void setTagChangeTag(int tagChangeTag) {
+		this.tagChangeTag = tagChangeTag;
+	}
+
+	public int getTag() {		
+			return tag;
 	}
 
 	public void setTag(int tag) {

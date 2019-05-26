@@ -1,5 +1,6 @@
 package controller;
 
+import view.JanelaDeTags;
 import view.MainView;
 
 /**
@@ -10,8 +11,9 @@ import view.MainView;
  * @author Tiago Vitorino
  * @since 17/02/2019
  */
-public abstract class TelaAux extends MainView{	
+public class TelaAux extends MainView{	
 
+	private TelaAux(){}
 	/**
 	 * Método executado ao mover o dedo na tela da direita para esquerda
 	 */
