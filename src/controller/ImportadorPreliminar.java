@@ -35,11 +35,17 @@ public class ImportadorPreliminar {
 	 * Abre o arquivo que será exportado
 	 * @return número 2, significa que trata-se de uma importação
 	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public int abrirArquivo(){
 		//Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		//Intent intent = new Intent(Intent.ACTION_PICK);
+		
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		intent.setType(TIPOMIME);
+		//intent.addCategory(Intent.CATEGORY_DEFAULT);
+		intent.setType("*/*");
+		//intent.setType(TIPOMIME);
+		//intent.setType("plain/text");
 		ac.startActivityForResult(intent, 1);
 		return 2;
 	}
