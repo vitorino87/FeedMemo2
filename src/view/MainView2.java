@@ -122,20 +122,21 @@ public class MainView2 extends Activity {
 		mc = new ControladorDoDB(context);// instancia um MainControl com o contexto atual
 		mc.abrirConexao();
 		switch(exportarOuImportar){
-		case 1:
-			ExportadorTemplate e = new ExportadorTemplate(MainView2.this); //instanciando o exportador
-			GeradorDeCSV geraCSV = new GeradorDeCSV();					
-			String csv = geraCSV.getCSV(mc, TABELA);
-			if(e.exportar(requestCode, resultCode, data, csv)){
-				Toast.makeText(this, "Exportado com Sucesso!", Toast.LENGTH_LONG).show();
-			}else{
-				Toast.makeText(this, "Erro na exportação", Toast.LENGTH_LONG).show();
-			};//exportando
-			
+		case 1:			
+			if(data!=null){
+				ExportadorTemplate e = new ExportadorTemplate(MainView2.this); //instanciando o exportador
+				GeradorDeCSV geraCSV = new GeradorDeCSV();					
+				String csv = geraCSV.getCSV(mc, TABELA);
+				if(e.exportar(requestCode, resultCode, data, csv)){
+					Toast.makeText(this, "Exportado com Sucesso!", Toast.LENGTH_LONG).show();
+				}else{
+					Toast.makeText(this, "Erro na exportação", Toast.LENGTH_LONG).show();
+				};//exportando
+			}						
 			break;
 		case 2:
 			ImportadorPreliminar i = new ImportadorPreliminar(MainView2.this);
-			boolean verifica=true;
+			boolean verifica=true, verif =false;
 			ArrayList<Object> listaDeErros = new ArrayList<Object>();//serve para listar os itens que falharam
 			ArrayList<String> lista = i.importar(requestCode, resultCode, data); 
 			Iterator<String> iterator = lista.iterator();	
@@ -166,12 +167,14 @@ public class MainView2 extends Activity {
 				if(l==-1){
 					verifica=false;
 					listaDeErros.add(valor);
-				}
+				}else
+					verif = true;
 			}
-			if(verifica)
+			if(verifica && verif)
 				Toast.makeText(this, "Importado com Sucesso!", Toast.LENGTH_LONG).show();
 			else
-				Toast.makeText(this, "Erro! Itens não importados: "+listaDeErros, Toast.LENGTH_LONG).show();
+				if(!verifica)
+					Toast.makeText(this, "Erro! Alguns itens não importados: "+listaDeErros, Toast.LENGTH_LONG).show();
 			break;
 		}					
 		exportarOuImportar = 0;
