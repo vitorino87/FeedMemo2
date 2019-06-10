@@ -44,6 +44,7 @@ public class ExportadorTemplate {
 	 * @param data - dados retornados pela intent
 	 * @param info - as informações que serão exportadas
 	 */
+	@SuppressWarnings("static-access")
 	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public boolean exportar(int requestCode, int resultCode, Intent data, String info){
 		boolean sucess = false;

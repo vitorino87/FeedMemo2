@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ public class MainView2 extends Activity {
 	int pixelAnterior=0;
 	Button btnExportar,btnImportar;
 	final String TABELA="ideias";
-	int exportarOuImportar = 0;
+	int exportarOuImportar = 0;	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,6 @@ public class MainView2 extends Activity {
 		final Context context = this.getApplicationContext();// pega o contexto desta View
 		txtIdeia = (EditText) findViewById(R.id.ideia);// conecta o EditText à variável txtIdeia
 		btnInserir = (Button) findViewById(R.id.button1);// conecta o Button à variável btnInserir
-		btnDeletar = (Button) findViewById(R.id.deletar);// conecta o Button à variável btnDeletar
 		ll = (LinearLayout) findViewById(R.id.linearLayout); 
 		btnExportar = (Button) findViewById(R.id.btnExportar);
 		btnImportar = (Button) findViewById(R.id.btnImportar);
@@ -85,36 +85,21 @@ public class MainView2 extends Activity {
 			}
 		});
 
-		btnDeletar.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {				
-				mc = new ControladorDoDB(context);// instancia um MainControl com o contexto atual
-				mc.abrirConexao();// abre a conexão com o banco
-				String ideia = txtIdeia.getText().toString();// adiciona o texto adicionado pelo usuário na variável ideia
-				ideia = ideia.replace(",", "\u0375");
-				FormatadorDeTexto ft = new FormatadorDeTexto();
-				ideia = ft.formatInputText(ideia);
-				if (!ideia.equals("")) { // se ideia não for ""
-					Boolean l = mc.deletarRow(ideia, TABELA); // delete no DB a string ideia na tabela memoria
-					if (l) { // se return true
-						Toast.makeText(context, "Ideia Removida!", Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(context, "Ideia não existe ou não pode ser removida!", Toast.LENGTH_SHORT).show();
-					}
-				}
-				mc.fecharConexao(); // fecha a conexão
-				txtIdeia.setText("");// limpa a tela
-			}
-		});	
+		
 
-		txtIdeia.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {  //método para quando acontece algo no EditText
-			FormatadorDeTexto ew = new FormatadorDeTexto();
-			@Override
-			public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop,
-					int oldRight, int oldBottom) {
-				setPixelAnterior(alterarTamanhoTexto(v, bottom, oldBottom, ew));//invocando o método para alterar tamanho texto
-			}
-		});							
+		FormatadorDeTexto ew2 = new FormatadorDeTexto();
+		ew2.setEdt(txtIdeia);
+		txtIdeia.addTextChangedListener(ew2);
+		
+//		txtIdeia.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {  //método para quando acontece algo no EditText
+//			FormatadorDeTexto ew = new FormatadorDeTexto();
+//			@Override
+//			public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop,
+//					int oldRight, int oldBottom) {
+//				setPixelAnterior(alterarTamanhoTexto(v, bottom, oldBottom, ew));//invocando o método para alterar tamanho texto
+//				//ew.impedirMaisDeDuasLinhas(txtIdeia.getEditableText());
+//			}			
+//		});							
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) { //método invocando ao retornar uma intent

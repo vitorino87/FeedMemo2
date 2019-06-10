@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +21,7 @@ import android.util.Log;
  *
  */
 public class ImportadorPreliminar {
-	private static final String TIPOMIME = "text/csv";
+	private static final String TIPOMIME = "*/*";
 	private static final String NOMEDOPROGRAMA = "FeedMemo";
 	Activity ac;
 	
@@ -43,7 +41,7 @@ public class ImportadorPreliminar {
 		
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
 		//intent.addCategory(Intent.CATEGORY_DEFAULT);
-		intent.setType("*/*");
+		intent.setType(TIPOMIME);
 		//intent.setType(TIPOMIME);
 		//intent.setType("plain/text");
 		ac.startActivityForResult(intent, 1);
@@ -57,6 +55,7 @@ public class ImportadorPreliminar {
 	 * @param data - dados retornados pela intent
 	 * @return
 	 */
+	@SuppressWarnings("static-access")
 	@TargetApi(Build.VERSION_CODES.KITKAT)
 	public ArrayList<String> importar(int requestCode, int resultCode, Intent data){
 		ArrayList<String> lista = new ArrayList<String>();

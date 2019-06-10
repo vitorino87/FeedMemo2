@@ -27,6 +27,7 @@ import android.widget.Toast;
 import controller.ControladorDoDB;
 import controller.GuardadorDeEstadosTemplate;
 
+@SuppressLint({ "ClickableViewAccessibility", "DefaultLocale" })
 public class MainView extends TelaTemplate implements OnTouchListener, OnGestureListener{	
 	protected static ControladorDoDB mc = null;		
 	static LinearLayout ll = null;		
@@ -314,6 +315,10 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			ai.setText(ideia.getText().toString());
 			ai.onCreateDialog().show();
 			break;
+		case R.id.itemDeletar:
+			ConfirmadorDeDel cd = new ConfirmadorDeDel(this, mc,TABELA,ideia.getText().toString());
+			cd.onCreateDialog().show();			
+			break;
 		}		
 		return super.onOptionsItemSelected(item);
 	}
@@ -387,7 +392,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			if(mc.getTipoDeQuery()==2 && mc.getMaxId()!=-1 && mc.getMinId()!=-1 || mc.getTipoDeQuery()==3
 					&& mc.getMaxId()!=-1 && mc.getMinId()!=-1){	
 				mc.retornarTodosResultados(TABELA);
-				mc.nextResult();
+				//mc.nextResult();
 				if(menu!=null)
 					onCreateOptionsMenu(menu);
 				if(a==-1){
