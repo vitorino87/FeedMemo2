@@ -12,7 +12,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.util.Log;
 
 public class ExportadorTemplate {
 
@@ -55,7 +54,7 @@ public class ExportadorTemplate {
 		Uri uri = null;
 		if (data != null) { // verificando se a intent é nula
 			uri = data.getData(); // adicionando os dados na URI
-			Log.i(NOMEDOPROGRAMA, "Uri: " + uri.toString()); // imprimindo informação no log
+			//Log.i(NOMEDOPROGRAMA, "Uri: " + uri.toString()); // imprimindo informação no log
 			try {
 				OutputStream is = ac.getContentResolver().openOutputStream(uri); // capturando um outputstream do ContentResolver
 				FileOutputStream fos = (FileOutputStream) is; // realizando cast

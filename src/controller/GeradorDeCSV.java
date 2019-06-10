@@ -24,6 +24,7 @@ public class GeradorDeCSV {
 		int qtdeDeRows = cursor.getCount();		
 		ExportadorTemplate et = new ExportadorTemplate(ac);
 		Writer wr = null;
+		wr = et.prepararExport(data);
 		cursor.moveToFirst();
 		for(int i=0; i<qtdeDeRows;i++){
 			for(int j=0; j<qtdeColunas;j++){				
@@ -38,8 +39,7 @@ public class GeradorDeCSV {
 					csv+=",";	//tag é o último campo, por isso não é necessário adicionar virgula
 			}
 			cursor.moveToNext();	//movendo para o próximo resultado					
-			csv+=((char)10);				//pulando linha
-			wr = et.prepararExport(data);
+			csv+=((char)10);				//pulando linha			
 			try {
 				et.salvar(wr, csv);
 			} catch (IOException e) {
