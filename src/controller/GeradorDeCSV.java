@@ -1,6 +1,11 @@
 package controller;
 
+import java.io.IOException;
+import java.io.Writer;
+
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 
@@ -9,7 +14,7 @@ public class GeradorDeCSV {
 	final String ULTIMACOLUNA = "tag";
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public String getCSV(ControladorDoDB mc, String TABELA){
+	public boolean gerarAndSave(ControladorDoDB mc, String TABELA, Activity ac, Intent data){
 		mc.abrirConexao();
 		mc.setTipoDeQuery(1);
 		mc.retornarTodosResultados(TABELA);
@@ -17,6 +22,8 @@ public class GeradorDeCSV {
 		String csv="";
 		int qtdeColunas = cursor.getColumnCount();
 		int qtdeDeRows = cursor.getCount();		
+		ExportadorTemplate et = new ExportadorTemplate(ac);
+		Writer wr = null;
 		cursor.moveToFirst();
 		for(int i=0; i<qtdeDeRows;i++){
 			for(int j=0; j<qtdeColunas;j++){				
@@ -30,10 +37,26 @@ public class GeradorDeCSV {
 					//...primeira coluna, pois a primeira coluna é id, isso evita que ele adiciona vírgula na frente da ideia
 					csv+=",";	//tag é o último campo, por isso não é necessário adicionar virgula
 			}
-			cursor.moveToNext();	//movendo para o próximo resultado		
-			csv+="\n";				//pulando linha
+			cursor.moveToNext();	//movendo para o próximo resultado					
+			csv+=((char)10);				//pulando linha
+			wr = et.prepararExport(data);
+			try {
+				et.salvar(wr, csv);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			csv="";
 		}
-		return csv;
-	}
-	
+		if(wr!=null){
+			try {
+				wr.close();
+				return true;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				return false;
+			}
+		}else{
+			return false;
+		}			
+	}	
 }
