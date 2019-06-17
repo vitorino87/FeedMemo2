@@ -4,7 +4,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.widget.EditText;
-import android.widget.TextView;
 
 
 //classe para lidar com o EditText, ao digitar alguma coisa nele.

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
 import controller.ControladorDoDB;
+import controller.FormatadorDeTexto;
 
 public class ConfirmadorDeDel {
 	Activity ac;
@@ -25,7 +26,10 @@ public class ConfirmadorDeDel {
 		alert.setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
 			
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(DialogInterface dialog, int which) {			
+				ideia = ideia.replace(",", "\u0375");
+				FormatadorDeTexto ft = new FormatadorDeTexto();
+				ideia = ft.formatInputText(ideia);
 				if(mc.deletarRow(ideia, tabela)){
 					Toast.makeText(ac, "Apagada com sucesso!", Toast.LENGTH_SHORT).show();										
 					mc.setMinId(mc.getCurrentId());
