@@ -225,16 +225,15 @@ public class ControladorDoDB {
 		cursor.moveToFirst();
 		try{
 			if(cursor.getCount()>0){
-				while(cursor.getInt(0)!=id){
+				while(cursor.getInt(0)!=id){ //se no cursor houver o id procurado, o laço termina e o método retorna essa posição
 					cursor.moveToNext();
-					if(cursor.isLast())
-						break;
+					if(cursor.isLast()) //esse laço verifica se o cursor está na última posição
+						break;			//se sim, ele quebra o laço e o método retorna a última posição.
 				}
 			}
 		}catch(Exception ex){
 			
 		}				
-		//cursor.moveToPosition(position);			
 		b = cursor.getString(1);								
 		return b;
 	}

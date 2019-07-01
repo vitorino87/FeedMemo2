@@ -1,14 +1,13 @@
 package view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import controller.ControladorDoDB;
 import feedme.feedmemo2.R;
 
+@SuppressLint("InflateParams")
 public class JanelaDeTags {
 
 	Activity ac;
@@ -196,9 +196,9 @@ public class JanelaDeTags {
 										// essa parte do código só ocorre na
 										// funcionalidade
 										// "Visualizar tag..."
-										// nas próximas 6 linhas o app tentará
-										// carregar as
-										// ideias do id atual até o id máximo.
+										// o app tenta
+										// carregar alguma ideia 
+										// que esteja no range entre o id atual até o id máximo.
 										Toast.makeText(ac, "Alterado para tag " + tag, Toast.LENGTH_SHORT).show();
 										mc.setTipoDeQuery(2);
 										mc.setTag(tagCarregada);

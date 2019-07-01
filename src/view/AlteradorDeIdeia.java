@@ -15,7 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import controller.ControladorDoDB;
 import controller.FormatadorDeTexto;
-
+/**
+ * Classe para alterar alguma ideia (funcionalidade Change Tag)
+ * @author tiago.lucas
+ *
+ */
 @SuppressLint("NewApi")
 public class AlteradorDeIdeia{
 
