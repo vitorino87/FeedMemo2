@@ -119,45 +119,12 @@ public class MainView2 extends Activity {
 			break;
 		case 2:
 			ImportadorPreliminar i = new ImportadorPreliminar(MainView2.this);
-			boolean verifica=true, verif =false;
-			ArrayList<Object> listaDeErros = new ArrayList<Object>();//serve para listar os itens que falharam
-			ArrayList<String> lista = i.importar(requestCode, resultCode, data); 
-			Iterator<String> iterator = lista.iterator();	
-			while(iterator.hasNext()){
-				String valores = iterator.next();				
-				ArrayList<String> valor = new ArrayList<String>();//variavel para armazenar os valores								
-				int a = 0;//variavel para realizar a contagem da string atual
-				int cont = 1;
-				while(!valores.isEmpty()){ //irá iterar até ser empty					
-					if(valores.charAt(a)==','){
-						String ideia = valores.substring(0, a);	
-						if(ideia.charAt(0)==34 && ideia.charAt(a-1)==34)//checando se há aspas no inicio e fim da ideia
-							ideia = ideia.substring(1, a-1); //removendo as aspas
-						if(ideia.contains(","))
-							ideia = ideia.replace(",", "\u0375");																		
-						valor.add(ideia);//inserindo a palavra																																																																		
-						valores = valores.substring(++a);//reduz a variavel valores e pula virgula													
-						a=0;//zerando a contagem
-						cont++;
-						if(cont==3){
-							valor.add(valores);
-							valores="";
-						}
-					}
-					a++;						
-				}							
-				Long l = mc.inserirRow(valor.get(0), valor.get(1), TABELA, Integer.valueOf(valor.get(2)));
-				if(l==-1){
-					verifica=false;
-					listaDeErros.add(valor);
-				}else
-					verif = true;
-			}
-			if(verifica && verif)
+			boolean verifica=true; 
+			verifica = i.importar(requestCode, resultCode, data, mc, TABELA); 
+			if(verifica)
 				Toast.makeText(this, "Importado com Sucesso!", Toast.LENGTH_LONG).show();
 			else
-				if(!verifica)
-					Toast.makeText(this, "Erro! Alguns itens não importados: "+listaDeErros, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Erro! Alguns itens não importados.", Toast.LENGTH_LONG).show();
 			break;
 		}					
 		exportarOuImportar = 0;
