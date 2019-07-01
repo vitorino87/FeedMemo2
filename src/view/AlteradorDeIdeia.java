@@ -87,8 +87,8 @@ public class AlteradorDeIdeia{
 		//ideia = ideia.replace(",", "\u0375");
 		FormatadorDeTexto ft = new FormatadorDeTexto();
 		ideia = ft.formatInputText(ideia);
-		if (ideia.contains(","))
-			ideia = ideia.replace(",", "\u0375");
+//		if (ideia.contains(","))
+//			ideia = ideia.replace(",", "\u0375");
 		cv.put("ideia", ideia);
 		if (mc.atualizarDB2(cv, tabela, idDB) != -2) {
 			Toast.makeText(ac, "Ideia atualizada!", Toast.LENGTH_SHORT).show();
