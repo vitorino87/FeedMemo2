@@ -1,7 +1,5 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import feedme.feedmemo2.R;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -10,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,7 +66,7 @@ public class MainView2 extends Activity {
 				mc = new ControladorDoDB(context);// instancia um MainControl com o contexto atual
 				mc.abrirConexao();// abre a conexão com o banco
 				String ideia = txtIdeia.getText().toString();// adiciona o texto adicionado pelo usuário na variável ideia				
-				ideia = ideia.replace(",", "\u0375");
+				//ideia = ideia.replace(",", "\u0375");
 				FormatadorDeTexto ft = new FormatadorDeTexto();
 				ideia = ft.formatInputText(ideia);
 				if (!ideia.equals("")) { // se ideia não for ""

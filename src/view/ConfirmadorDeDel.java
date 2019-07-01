@@ -27,7 +27,7 @@ public class ConfirmadorDeDel {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {			
-				ideia = ideia.replace(",", "\u0375");
+				//ideia = ideia.replace(",", "\u0375");
 				FormatadorDeTexto ft = new FormatadorDeTexto();
 				ideia = ft.formatInputText(ideia);
 				if(mc.deletarRow(ideia, tabela)){
