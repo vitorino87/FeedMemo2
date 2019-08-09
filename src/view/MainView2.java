@@ -67,14 +67,14 @@ public class MainView2 extends Activity {
 				mc.abrirConexao();// abre a conexão com o banco
 				String ideia = txtIdeia.getText().toString();// adiciona o texto adicionado pelo usuário na variável ideia				
 				//ideia = ideia.replace(",", "\u0375");
-				FormatadorDeTexto ft = new FormatadorDeTexto();
+				FormatadorDeTexto ft = new FormatadorDeTexto();   //essa classe é aquele q troca char(10)
 				ideia = ft.formatInputText(ideia);
 				if (!ideia.equals("")) { // se ideia não for ""
 					Long l = mc.inserirRow(ideia,"n", TABELA,0); // insere no DB a string ideia na tabela memoria
 					if (l > -1) { // se o método anterior retornar um valor maior que -1
 						Toast.makeText(context, "Ideia Salva!", Toast.LENGTH_SHORT).show();
 					} else {
-						Toast.makeText(context, "Ideia já existe ou não pode ser salva!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "Ideia não pode ser salva!", Toast.LENGTH_SHORT).show();
 					}
 				}
 				mc.fecharConexao(); // fecha a conexão

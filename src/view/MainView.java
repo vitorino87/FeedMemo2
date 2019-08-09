@@ -145,11 +145,11 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	public static void carregar(String b){
 		bkp = b;
 		String a = null;
-		try {
+		try {              //por questões de compatibilidade será necessário deixar esses replaces
 			a = new String(b.getBytes("UTF8"), StandardCharsets.UTF_8);
 			a = a.replace("\u0375", ",");
 			controller.FormatadorDeTexto ft = new controller.FormatadorDeTexto();
-			a = ft.formatOutputText(a);
+			a = ft.formatOutputText(a);          //troca por char(10)
 		} catch (UnsupportedEncodingException e) {e.printStackTrace();}	
 		
 		if(allcaps)
