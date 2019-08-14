@@ -299,10 +299,15 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			JanelaDeTags.setChooseTela(0);
 			break;			
 		case R.id.itemVisualizarItensTag:
+			carregarTemp:{ //esse trecho faz parte da funcionalidade que faz o app carregar a ideia do último acesso
+				GuardadorDeEstadosTemplate gd = new GuardadorDeEstadosTemplate();
+				gd.guardarEstado("temp"+mc.getTag(), mc.getCurrentId(), this);
+				break carregarTemp;
+			}
 			jt.onCreateDialog(2).show();
 			JanelaDeTags.setChooseTela(2);
 			break;			
-		case R.id.itemChangeTag:
+		case R.id.itemChangeTag:			
 			jt.onCreateDialog(1).show();
 			JanelaDeTags.setChooseTela(1);
 			break;			
@@ -356,6 +361,10 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				gd.guardarEstado("currentId", mc.getCurrentId(), this);
 				gd.guardarEstado("tag", mc.getTag(), this);
 				gd.guardarEstado("morto", mc.getMorto(), this);
+				carregarTemp:{ //esse trecho faz parte da funcionalidade que faz o app carregar a ideia do último acesso
+					gd.guardarEstado("temp"+mc.getTag(), mc.getCurrentId(), this); //serve para guardar a posição de cada tag
+					break carregarTemp;
+				}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -393,8 +402,16 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 					&& mc.getMaxId()!=-1 && mc.getMinId()!=-1){					
 				//if(mc.getTag()==0){
 				//	mc.setTipoDeQuery(3);
-				//}
-				mc.retornarTodosResultados(TABELA);
+				//}		
+				carregarTemp:{ //esse trecho faz parte da funcionalidade que faz o app carregar a ideia do último acesso
+					if(mc.getTipoDeQuery()!=3 && gd.restaurarEstado("temp"+mc.getTag(), this)!=-1){     //este trecho serve para recuperar a posição dessa última tag
+						a = gd.restaurarEstado("temp"+mc.getTag(), this); 
+						mc.setMinId(a);
+						mc.setMaxId(a+5);
+					}
+					break carregarTemp;
+				}
+				mc.retornarTodosResultados(TABELA);				
 				//mc.nextResult();
 				if(menu!=null)
 					onCreateOptionsMenu(menu);
