@@ -283,16 +283,17 @@ public class ControladorDoDB {
 	}
 	
 	public Long inserirRow(Object ideia, Object morto, String tabela, int tag){
-		if(!banco.buscar(db, (String)ideia,tabela)){
+		//boolean b = banco.buscar(db, (String)ideia,tabela);
+		//if(b == false){
 			ContentValues cv = new ContentValues();
 			cv.put("morto", (String)morto);
 			cv.put("ideia", (String)ideia);
 			cv.put("tag", tag);
 			Long a = banco.inserir(db, cv, tabela);			
 			return a;
-		}else{
-			return -1L;
-		}
+		//}else{
+			//return -1L;
+		//}
 		
 	}
 	

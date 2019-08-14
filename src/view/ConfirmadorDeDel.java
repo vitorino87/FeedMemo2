@@ -22,7 +22,7 @@ public class ConfirmadorDeDel {
 	
 	public Dialog onCreateDialog(){
 		AlertDialog.Builder alert = new AlertDialog.Builder(ac);
-		alert.setMessage("Deseja apagar essa ideia?");
+		alert.setMessage("Deseja apagar essa ideia? Obs: TODAS as ocorrências dela será apaga!");
 		alert.setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
 			
 			@Override

@@ -71,9 +71,8 @@ public class ImportadorPreliminar {
 					int ch;
 					String text = "";
 					while ((ch = rd.read()) != -1) {
-						if (ch != 10)
-							if (ch != 13) {
-								// if(ch!=34) //se char não é "
+						if (ch != 10){
+							if (ch != 13) 								
 								text += String.valueOf((char) ch);
 							} else {
 								distribuidor: {

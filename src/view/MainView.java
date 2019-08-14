@@ -52,17 +52,17 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState); //chama o mÈtodo onCreate da Classe m„e
+		super.onCreate(savedInstanceState); //chama o m√©todo onCreate da Classe m√£e
 		context = this.getApplicationContext(); //pega o contexto desta View		
 		mc = new ControladorDoDB(context); //instancia um MainControl com o contexto desta View
 		setContentView(R.layout.tela1);	//Carrega a tela1	
-		ll = (LinearLayout)findViewById(R.id.linearLayout);//conecta o linearLayout a vari·vel ll
+		ll = (LinearLayout)findViewById(R.id.linearLayout);//conecta o linearLayout a vari√°vel ll
 		gestureDetector = new GestureDetector(MainView.this, MainView.this);//instancia o gesture para trabalhar com os gestos na tela
-		ideia = (EditText)findViewById(R.id.editText1);//conecta o editText1 a vari·vel ideia
+		ideia = (EditText)findViewById(R.id.editText1);//conecta o editText1 a vari√°vel ideia
 		tagView = (TextView) findViewById(R.id.textView1);
 		tagMax = (TextView)findViewById(R.id.tagMax);
 		
-		//mÈtodo para adicionar a aÁ„o de Touch no LinearLayout
+		//m√©todo para adicionar a a√ß√£o de Touch no LinearLayout
 		ll.setOnTouchListener(new OnTouchListener() {			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -72,7 +72,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				return true;
 			}
 		});		
-		//mÈtodo para adicionar a aÁ„o de Touch no EditText
+		//m√©todo para adicionar a a√ß√£o de Touch no EditText
 		ideia.setOnTouchListener(new OnTouchListener() {			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {				
@@ -86,7 +86,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	}	
 	
 	/**
-	 * MÈtodo inicial para carregar os resultados da tabela memoria do banco sem dead files
+	 * M√©todo inicial para carregar os resultados da tabela memoria do banco sem dead files
 	 */
 	public static void loadIdeias(){
 		try{
@@ -101,7 +101,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	}
 	
 	/**
-	 * MÈtodo para carregar a ideia no EditText
+	 * M√©todo para carregar a ideia no EditText
 	 */
 	@SuppressLint("NewApi")
 	public static void carregarIdeia(){
@@ -112,7 +112,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	}
 		
 	/**
-	 * MÈtodo para carregar a 1™ ideia no EditText
+	 * M√©todo para carregar a 1¬™ ideia no EditText
 	 */
 	public static void carregarFirst(){
 		try{
@@ -123,7 +123,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	}
 	
 	/**
-	 * MÈtodo para carregar a ideia no EditText
+	 * M√©todo para carregar a ideia no EditText
 	 */
 	public static void carregarIdeiaAnterior(){
 		try{
@@ -145,11 +145,11 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	public static void carregar(String b){
 		bkp = b;
 		String a = null;
-		try {
+		try {              //por quest√µes de compatibilidade ser√° necess√°rio deixar esses replaces
 			a = new String(b.getBytes("UTF8"), StandardCharsets.UTF_8);
 			a = a.replace("\u0375", ",");
 			controller.FormatadorDeTexto ft = new controller.FormatadorDeTexto();
-			a = ft.formatOutputText(a);
+			a = ft.formatOutputText(a);          //troca por char(10)
 		} catch (UnsupportedEncodingException e) {e.printStackTrace();}	
 		
 		if(allcaps)
@@ -173,8 +173,8 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 		tagView.setText("Tag: "+mc.getTagAtual());		
 	}
 	
-	/**ExplicaÁ„o:
-	 * MÈtodo executado ao tocar em algum item do menu
+	/**Explica√ß√£o:
+	 * M√©todo executado ao tocar em algum item do menu
 	 * @author Tiago Vitorino
 	 * @since 16/02/2019 
 	 */
@@ -188,9 +188,9 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 		switch (id) {
 		case R.id.item1:		
 			try{
-			//mc.armazenarPositionDoCursor();//esse mÈtodo armazena a posiÁ„o do Cursor, antes de chamar a prÛxima tela 			
-			Intent it = new Intent(context, MainView2.class);//Criando a intenÁ„o de chamar a prÛxima classe/Tela
-			startActivity(it);//Inicia o mÈtodo onCreate da classe MainView2
+			//mc.armazenarPositionDoCursor();//esse m√©todo armazena a posi√ß√£o do Cursor, antes de chamar a pr√≥xima tela 			
+			Intent it = new Intent(context, MainView2.class);//Criando a inten√ß√£o de chamar a pr√≥xima classe/Tela
+			startActivity(it);//Inicia o m√©todo onCreate da classe MainView2
 			}catch(Exception e){
 				
 			}
@@ -212,7 +212,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				}
 				carregarFirst();
 			}else{
-				Toast.makeText(context, "N„o foi possÌvel adicionar ao arquivo morto", Toast.LENGTH_LONG).show();
+				Toast.makeText(context, "N√£o foi poss√≠vel adicionar ao arquivo morto", Toast.LENGTH_LONG).show();
 			}
 			break;
 		case R.id.item3:
@@ -223,7 +223,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			mc.setMorto("s");
 			mc.retornarTodosResultados(TABELA);
 			if(mc.getCursor().getCount()<=0){
-				Toast.makeText(context, "N„o h· Dead Files", Toast.LENGTH_LONG).show();
+				Toast.makeText(context, "N√£o h√° Dead Files", Toast.LENGTH_LONG).show();
 				if(tipoQuery==2){
 					mc.setTipoDeQuery(2);
 					mc.setTag(tagAtual);
@@ -273,14 +273,14 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 						menu.clear();
 						MenuDoMainView mmv = new MenuDoMainView(MainView.this, menu);	   
 					    mmv.chamarMenuInicial(R.menu.menu);
-						Toast.makeText(context, "N„o h· Dead Files, por isso Retornou", Toast.LENGTH_LONG).show();
+						Toast.makeText(context, "N√£o h√° Dead Files, por isso Retornou", Toast.LENGTH_LONG).show();
 						mc.setMorto("n");
 						mc.retornarTodosResultados(TABELA);						
 					}
 				}
 				carregarFirst();								
 			}else{
-				Toast.makeText(context, "N„o foi possÌvel remover do arquivo morto", Toast.LENGTH_LONG).show();
+				Toast.makeText(context, "N√£o foi poss√≠vel remover do arquivo morto", Toast.LENGTH_LONG).show();
 			}
 			break;
 		case R.id.item6:
@@ -299,10 +299,15 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			JanelaDeTags.setChooseTela(0);
 			break;			
 		case R.id.itemVisualizarItensTag:
+			carregarTemp:{ //esse trecho faz parte da funcionalidade que faz o app carregar a ideia do ˙ltimo acesso
+				GuardadorDeEstadosTemplate gd = new GuardadorDeEstadosTemplate();
+				gd.guardarEstado("temp"+mc.getTag(), mc.getCurrentId(), this);
+				break carregarTemp;
+			}
 			jt.onCreateDialog(2).show();
 			JanelaDeTags.setChooseTela(2);
 			break;			
-		case R.id.itemChangeTag:
+		case R.id.itemChangeTag:			
 			jt.onCreateDialog(1).show();
 			JanelaDeTags.setChooseTela(1);
 			break;			
@@ -333,14 +338,14 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	}
 		
 	/**
-	 * MÈtodo de pause	
+	 * M√©todo de pause	
 	 */
 	@Override
 	protected void onPause(){
 		super.onPause();
 	}	
 	/**
-	 * MÈtodo de stop
+	 * M√©todo de stop
 	 */
 	@Override
 	protected void onStop(){
@@ -354,15 +359,19 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				gd.guardarEstado("minId", mc.getCurrentIdMin(), this);
 				gd.guardarEstado("maxId", mc.getCurrentIdMax(), this);
 				gd.guardarEstado("currentId", mc.getCurrentId(), this);
-				gd.guardarEstado("tag", JanelaDeTags.tagCarregada, this);
+				gd.guardarEstado("tag", mc.getTag(), this);
 				gd.guardarEstado("morto", mc.getMorto(), this);
+				carregarTemp:{ //esse trecho faz parte da funcionalidade que faz o app carregar a ideia do ˙ltimo acesso
+					gd.guardarEstado("temp"+mc.getTag(), mc.getCurrentId(), this); //serve para guardar a posiÁ„o de cada tag
+					break carregarTemp;
+				}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * MÈtodo que ocorre ao fechar app
+	 * M√©todo que ocorre ao fechar app
 	 */
 	@Override
 	protected void onDestroy(){
@@ -370,7 +379,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 	}
 	
 	/**
-	 * MÈtodo resume
+	 * M√©todo resume
 	 */
 	@Override
 	protected void onResume(){
@@ -390,13 +399,24 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 			mc.setTag(gd.restaurarEstado("tag", this));
 			mc.setMorto(gd.restaurarEstado2("morto", this));						
 			if(mc.getTipoDeQuery()==2 && mc.getMaxId()!=-1 && mc.getMinId()!=-1 || mc.getTipoDeQuery()==3
-					&& mc.getMaxId()!=-1 && mc.getMinId()!=-1){	
-				mc.retornarTodosResultados(TABELA);
+					&& mc.getMaxId()!=-1 && mc.getMinId()!=-1){					
+				//if(mc.getTag()==0){
+				//	mc.setTipoDeQuery(3);
+				//}		
+				carregarTemp:{ //esse trecho faz parte da funcionalidade que faz o app carregar a ideia do ˙ltimo acesso
+					if(mc.getTipoDeQuery()!=3 && gd.restaurarEstado("temp"+mc.getTag(), this)!=-1){     //este trecho serve para recuperar a posiÁ„o dessa ˙ltima tag
+						a = gd.restaurarEstado("temp"+mc.getTag(), this); 
+						mc.setMinId(a);
+						mc.setMaxId(a+5);
+					}
+					break carregarTemp;
+				}
+				mc.retornarTodosResultados(TABELA);				
 				//mc.nextResult();
 				if(menu!=null)
 					onCreateOptionsMenu(menu);
 				if(a==-1){
-					mc.getCursor().moveToFirst();
+					//mc.getCursor().moveToFirst();
 					mc.initialResult();
 				}else{
 					carregarIdeia(a);
@@ -497,12 +517,12 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				MainView.tagView.setText("Tag: " + mc.getTagAtual());
 				Toast.makeText(MainView.this, "Adicionado na tag " + mc.getTagChangeTag(), Toast.LENGTH_SHORT).show();
 			} else {
-				// essa parte do cÛdigo sÛ ocorre na
+				// essa parte do c√≥digo s√≥ ocorre na
 				// funcionalidade
 				// "Visualizar tag..."
-				// nas prÛximas 6 linhas o app tentar·
+				// nas pr√≥ximas 6 linhas o app tentar√°
 				// carregar as
-				// ideias do id atual atÈ o id m·ximo.
+				// ideias do id atual at√© o id m√°ximo.
 				Toast.makeText(MainView.this, "Alterado para tag " + mc.getTagChangeTag(), Toast.LENGTH_SHORT).show();
 				mc.setTipoDeQuery(2);
 				mc.setTag(JanelaDeTags.tagCarregada);
@@ -510,17 +530,17 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				mc.setMaxId(mc.getIdMaxDB());
 				mc.retornarTodosResultados(TABELA);
 				if (mc.getCursor().getCount() <= 0) {
-					// ...se n„o conseguir encontrar
+					// ...se n√£o conseguir encontrar
 					// nada o app
-					// tentar· carregas as ideias do id
-					// mÌnimo atÈ o
+					// tentar√° carregas as ideias do id
+					// m√≠nimo at√© o
 					// id atual
 					mc.setMinId(mc.getIdMinDB());
 					mc.setMaxId(a);
 					mc.retornarTodosResultados(TABELA);
 					if (mc.getCursor().getCount() <= 0) {
-						// ...se n„o conseguir nada ele
-						// retorna ‡s
+						// ...se n√£o conseguir nada ele
+						// retorna √†s
 						// ideias gerais
 						menu.clear();
 						JanelaDeTags.checarMenu = false;
@@ -529,7 +549,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 						mc.setMorto("n");
 						mc.setTipoDeQuery(4);
 						mc.retornarTodosResultados(TABELA);
-						Toast.makeText(MainView.this, "Retornou porque n„o h· mais tag " + JanelaDeTags.tagCarregada,
+						Toast.makeText(MainView.this, "Retornou porque n√£o h√° mais tag " + JanelaDeTags.tagCarregada,
 								Toast.LENGTH_LONG).show();
 						JanelaDeTags.setChooseTela(0);
 					}
@@ -537,7 +557,7 @@ public class MainView extends TelaTemplate implements OnTouchListener, OnGesture
 				MainView.carregarFirst();
 			}
 		} catch (NumberFormatException e) {
-			Toast.makeText(MainView.this, "N„o foi possÌvel adicionar a tag", Toast.LENGTH_LONG).show();
+			Toast.makeText(MainView.this, "N√£o foi poss√≠vel adicionar a tag", Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
 
